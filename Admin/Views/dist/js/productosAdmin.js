@@ -46,17 +46,76 @@ function listarProductos() {
             },
         },
         columns: [
-            { data: "0" },  // Codigo
-            { data: "1" },  // Nombre
-            { data: "2" },  // Descripcion
-            { data: "3" },  // Cantidad
-            { data: "4" },  // Precio
+            { data: "0", visible: true },
+             // Codigo 
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<a type="button" class="btn btn-danger m-2 eliminar-producto" data-cod="' + data[0] + '"><i class="fas fa-trash"></i> Eliminar</a>' +
-                        '<a id="modificarProducto" class="editar-btn btn btn-success float-right" style="margin-right: 8px;" data-cod="' + data[0] + '"><i class="fas fa-pencil-alt"></i> Editar</a>' +
-                        '<a type="button" class="btn btn-primary m-2" style="margin-right: 8px;" href="verProducto.php?Codigo=' + data[0] + '"><i class="fas fa-eye"></i>Ver</a>';
+                    return `
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex flex-column justify-content-center">
+                            <span class="text-body text-wrap fw-medium">${data[1]}</span>
+                        </div>
+                    </div>
+                    `;
+                }
+            },
+            // Nombre 
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex flex-column justify-content-center">
+                            <span class="text-body text-wrap fw-medium">${data[2]}</span>
+                        </div>
+                    </div>
+                    `;
+                }
+            },
+             // Descrip 
+             {
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex flex-column justify-content-center">
+                            <span class="text-body text-wrap fw-medium">${data[3]}</span>
+                        </div>
+                    </div>
+                    `;
+                }
+            },
+             // Cantidad 
+             {
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex flex-column justify-content-center">
+                            <span class="text-body text-wrap fw-medium">${data[4]}</span>
+                        </div>
+                    </div>
+                    `;
+                }
+            },
+             // precio 
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                    <div class="table-data-feature">
+                        <button class="item" data-toggle="tooltip" data-placement="top" title="Borrar" data-cod="${data[0]}">
+                            <i class="zmdi zmdi-delete"></i>
+                        </button>
+                        <button class="item" data-toggle="tooltip" data-placement="top" title="Editar" data-cod="${data[0]}" onclick="window.location.href='editarProducto.php?Codigo=${data[0]}'">
+                            <i class="zmdi zmdi-edit"></i>
+                        </button>
+                        <button class="item" data-toggle="tooltip" data-placement="top" title="Ver" data-cod="${data[0]}" onclick="window.location.href='verProducto.php?Codigo=${data[0]}'">
+                            <i class="zmdi zmdi-eye"></i>
+                        </button>
+                    </div>
+                `;
                 }
             }
         ]

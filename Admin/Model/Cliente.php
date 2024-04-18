@@ -8,9 +8,11 @@ class Cliente extends Conexion
 	=            Atributos de la Clase            =
 	=============================================*/
     protected static $cnx;
-    private $IdCliente;
-    private $nombre;
-    private $apellido;
+    private $Cedula;
+    private $nombreCliente;
+    private $apellidoCliente;
+    private $segundoApCliente;
+    private $genero;
     private $correo;
     private $contrasena;
     private $telefono;
@@ -34,35 +36,56 @@ class Cliente extends Conexion
 	=            Encapsuladores de la Clase       =
 	=============================================*/
 
-    public function setIdCliente($IdCliente)
+    public function setCedula($Cedula)
     {
-        $this->IdCliente = $IdCliente;
+        $this->Cedula = $Cedula;
     }
 
-    public function getIdCliente()
+    public function getCedula()
     {
-        return $this->IdCliente;
+        return $this->Cedula;
     }
 
-    public function setNombre($nombre)
+    public function setNombreCliente($nombreCliente)
     {
-        $this->nombre = $nombre;
+        $this->nombreCliente = $nombreCliente;
     }
 
-    public function getNombre()
+    public function getNombreCliente()
     {
-        return $this->nombre;
+        return $this->nombreCliente;
     }
 
-    public function setApellido($apellido)
+    public function setApellidoCliente($apellidoCliente)
     {
-        $this->apellido = $apellido;
+        $this->apellidoCliente = $apellidoCliente;
     }
 
-    public function getApellido()
+    public function getApellidoCliente()
     {
-        return $this->apellido;
+        return $this->apellidoCliente;
     }
+
+    public function setSegundoApCliente($segundoApCliente)
+    {
+        $this->segundoApCliente = $segundoApCliente;
+    }
+
+    public function getSegundoApCliente()
+    {
+        return $this->segundoApCliente;
+    }
+
+    public function setGenero($genero)
+    {
+        $this->genero = $genero;
+    }
+
+    public function getGenero()
+    {
+        return $this->genero;
+    }
+
     public function setCorreo($correo)
     {
         $this->correo = $correo;
@@ -162,7 +185,7 @@ class Cliente extends Conexion
 
     public function listarClientes()
     {
-        $query = "SELECT * FROM cliente";
+        $query = "SELECT * FROM clientes ";
         $arr = array();
 
         try {
@@ -173,9 +196,11 @@ class Cliente extends Conexion
 
             foreach ($resultado->fetchAll() as $encontrado) {
                 $cliente = new Cliente();
-                $cliente->setIdCliente($encontrado['IdCliente']);
-                $cliente->setNombre($encontrado['nombre']);
-                $cliente->setApellido($encontrado['apellido']);
+                $cliente->setCedula($encontrado['Cedula']);
+                $cliente->setnombreCliente($encontrado['nombreCliente']);
+                $cliente->setapellidoCliente($encontrado['apellidoCliente']);
+                $cliente->setSegundoApCliente($encontrado['segundoApCliente']);
+                $cliente->setGenero($encontrado['genero']);
                 $cliente->setCorreo($encontrado['correo']);
                 $cliente->setContrasena($encontrado['contrasena']);
                 $cliente->setTelefono($encontrado['telefono']);
@@ -196,15 +221,15 @@ class Cliente extends Conexion
     }
     public function verificarExistenciaCliente()
     {
-        $query = "SELECT 1 FROM cliente WHERE telefono=:telefono OR correo=:correo LIMIT 1";
+        $query = "SELECT 1 FROM clientes WHERE Cedula=:Cedula OR correo=:correo LIMIT 1";
 
         try {
             self::getConexion();
-            $telefono = $this->getTelefono();
+            $Cedula = $this->getCedula();
             $correo = $this->getCorreo();
 
             $stmt = self::$cnx->prepare($query);
-            $stmt->bindParam(":telefono", $telefono, PDO::PARAM_STR);
+            $stmt->bindParam(":Cedula", $Cedula, PDO::PARAM_INT);
             $stmt->bindParam(":correo", $correo, PDO::PARAM_STR);
             $stmt->execute();
 
@@ -222,14 +247,17 @@ class Cliente extends Conexion
 
     public function guardarEnDb()
     {
-        $query = "INSERT INTO cliente ( `nombre`, `apellido`,  `correo`, `contrasena`, `telefono`, `tipoCliente`, `provincia`, `distrito`, `canton`, `otros`)
-            VALUES ( :nombre, :apellido, :correo, :contrasena, :telefono, :tipoCliente, :provincia, :distrito, :canton, :otros)";
+        $query = "INSERT INTO clientes ( `Cedula`,`nombreCliente`, `apellidoCliente`, `segundoApCliente`, `genero`, `correo`, `contrasena`, `telefono`, `tipoCliente`, `provincia`, `distrito`, `canton`, `otros`)
+            VALUES ( :Cedula ,:nombreCliente, :apellidoCliente, :segundoApCliente, :genero, :correo, :contrasena, :telefono, :tipoCliente, :provincia, :distrito, :canton, :otros)";
 
         try {
             self::getConexion();
 
-            $nombre = $this->getNombre();
-            $apellido = $this->getApellido();
+            $cedula = $this->getCedula();
+            $nombreCliente = $this->getnombreCliente();
+            $apellidoCliente = $this->getapellidoCliente();
+            $segundoApCliente = $this->getSegundoApCliente();
+            $genero = $this->getGenero();
             $correo = $this->getCorreo();
             $contrasena = $this->getContrasena();
             $telefono = $this->getTelefono();
@@ -241,8 +269,11 @@ class Cliente extends Conexion
 
             $resultado = self::$cnx->prepare($query);
 
-            $resultado->bindParam(":nombre", $nombre, PDO::PARAM_STR);
-            $resultado->bindParam(":apellido", $apellido, PDO::PARAM_STR);
+            $resultado->bindParam(":Cedula", $cedula, PDO::PARAM_INT);
+            $resultado->bindParam(":nombreCliente", $nombreCliente, PDO::PARAM_STR);
+            $resultado->bindParam(":apellidoCliente", $apellidoCliente, PDO::PARAM_STR);
+            $resultado->bindParam(":segundoApCliente", $segundoApCliente, PDO::PARAM_STR);
+            $resultado->bindParam(":genero", $genero, PDO::PARAM_STR);
             $resultado->bindParam(":correo", $correo, PDO::PARAM_STR);
             $resultado->bindParam(":contrasena", $contrasena, PDO::PARAM_STR);
             $resultado->bindParam(":telefono", $telefono, PDO::PARAM_STR);
@@ -253,6 +284,7 @@ class Cliente extends Conexion
             $resultado->bindParam(":otros", $otros, PDO::PARAM_STR);
 
             $resultado->execute();
+            self::desconectar();
 
             if ($resultado->rowCount() > 0) {
 
@@ -261,8 +293,6 @@ class Cliente extends Conexion
 
                 return false;
             }
-
-            self::desconectar();
         } catch (PDOException $Exception) {
             self::desconectar();
             $error = "Error " . $Exception->getCode() . ": " . $Exception->getMessage();;
@@ -273,41 +303,46 @@ class Cliente extends Conexion
 
     public function actualizarCliente()
     {
-        $query = "UPDATE cliente 
-                    SET nombre = :nombre, apellido = :apellido, telefono = :telefono, 
+        $query = "UPDATE clientes
+                    SET nombreCliente = :nombreCliente, apellidoCliente = :apellidoCliente, 
+                        segundoApCliente = :segundoApCliente, genero = :generos, telefono = :telefono, 
                         tipoCliente = :tipoCliente, provincia = :provincia, 
                         distrito = :distrito, canton = :canton, otros = :otros 
-                    WHERE IdCliente = :IdCliente";
+                    WHERE Cedula = :Cedula";
 
         try {
             self::getConexion();
 
-            $nombre = $this->getNombre();
-            $apellido = $this->getApellido();
+            $nombreCliente = $this->getnombreCliente();
+            $apellidoCliente = $this->getapellidoCliente();
+            $segundoApCliente = $this->getSegundoApCliente();
+            $genero = $this->getGenero();
             $telefono = $this->getTelefono();
             $tipoCliente = $this->getTipoCliente();
             $provincia = $this->getProvincia();
             $distrito = $this->getDistrito();
             $canton = $this->getCanton();
             $otros = $this->getOtros();
-            $IdCliente = $this->getIdCliente();
+            $Cedula = $this->getCedula();
 
             $resultado = self::$cnx->prepare($query);
 
-            $resultado->bindParam(":nombre", $nombre, PDO::PARAM_STR);
-            $resultado->bindParam(":apellido", $apellido, PDO::PARAM_STR);
+            $resultado->bindParam(":nombreCliente", $nombreCliente, PDO::PARAM_STR);
+            $resultado->bindParam(":apellidoCliente", $apellidoCliente, PDO::PARAM_STR);
+            $resultado->bindParam(":segundoApCliente", $segundoApCliente, PDO::PARAM_STR);
+            $resultado->bindParam(":genero", $genero, PDO::PARAM_STR);
             $resultado->bindParam(":telefono", $telefono, PDO::PARAM_STR);
             $resultado->bindParam(":tipoCliente", $tipoCliente, PDO::PARAM_BOOL);
             $resultado->bindParam(":provincia", $provincia, PDO::PARAM_STR);
             $resultado->bindParam(":distrito", $distrito, PDO::PARAM_STR);
             $resultado->bindParam(":canton", $canton, PDO::PARAM_STR);
             $resultado->bindParam(":otros", $otros, PDO::PARAM_STR);
-            $resultado->bindParam(":IdCliente", $IdCliente, PDO::PARAM_INT);
+            $resultado->bindParam(":Cedula", $Cedula, PDO::PARAM_INT);
 
             self::$cnx->beginTransaction(); // Desactiva el autocommit
 
             $resultado->execute();
-            self::$cnx->commit(); // Realiza el commit y vuelve al modo autocommit
+            self::$cnx->commit(); 
             self::desconectar();
             return $resultado->rowCount();
         } catch (PDOException $Exception) {
@@ -318,56 +353,10 @@ class Cliente extends Conexion
         }
     }
 
-    public function actualizarClienteVC()
+
+    public static function obtenerClientePorCedula($Cedula)
     {
-        $query = "UPDATE cliente 
-                    SET nombre = :nombre, apellido = :apellido, telefono = :telefono, 
-                        contrasena = :contrasena, provincia = :provincia, 
-                        distrito = :distrito, canton = :canton, otros = :otros 
-                    WHERE IdCliente = :IdCliente";
-
-        try {
-            self::getConexion();
-
-            $nombre = $this->getNombre();
-            $apellido = $this->getApellido();
-            $telefono = $this->getTelefono();
-            $contrasena = $this->getContrasena();
-            $provincia = $this->getProvincia();
-            $distrito = $this->getDistrito();
-            $canton = $this->getCanton();
-            $otros = $this->getOtros();
-            $IdCliente = $this->getIdCliente();
-
-            $resultado = self::$cnx->prepare($query);
-
-            $resultado->bindParam(":nombre", $nombre, PDO::PARAM_STR);
-            $resultado->bindParam(":apellido", $apellido, PDO::PARAM_STR);
-            $resultado->bindParam(":telefono", $telefono, PDO::PARAM_STR);
-            $resultado->bindParam(":contrasena", $contrasena, PDO::PARAM_STR);
-            $resultado->bindParam(":provincia", $provincia, PDO::PARAM_STR);
-            $resultado->bindParam(":distrito", $distrito, PDO::PARAM_STR);
-            $resultado->bindParam(":canton", $canton, PDO::PARAM_STR);
-            $resultado->bindParam(":otros", $otros, PDO::PARAM_STR);
-            $resultado->bindParam(":IdCliente", $IdCliente, PDO::PARAM_INT);
-
-            self::$cnx->beginTransaction(); // Desactiva el autocommit
-
-            $resultado->execute();
-            self::$cnx->commit(); // Realiza el commit y vuelve al modo autocommit
-            self::desconectar();
-            return $resultado->rowCount();
-        } catch (PDOException $Exception) {
-            self::$cnx->rollBack();
-            self::desconectar();
-            $error = "Error " . $Exception->getCode() . ": " . $Exception->getMessage();
-            return $error;
-        }
-    }
-
-    public static function obtenerClientePorIdCliente($IdCliente)
-    {
-        $query = "SELECT * FROM cliente WHERE IdCliente = :IdCliente";
+        $query = "SELECT * FROM clientes WHERE Cedula = :Cedula";
         try {
             // Conecta a la base de datos
             self::getConexion();
@@ -376,7 +365,7 @@ class Cliente extends Conexion
             $stmt = self::$cnx->prepare($query);
 
             // Asigna el valor de la cédula y ejecuta la consulta
-            $stmt->bindParam(":IdCliente", $IdCliente, PDO::PARAM_INT);
+            $stmt->bindParam(":Cedula", $Cedula, PDO::PARAM_INT);
             $stmt->execute();
 
             // Obtiene los resultados y los devuelve como un arreglo asociativo
@@ -394,14 +383,14 @@ class Cliente extends Conexion
 
     public function eliminarcliente()
     {
-        $query = "DELETE FROM cliente WHERE IdCliente = :IdCliente";
+        $query = "DELETE FROM clientes WHERE Cedula = :Cedula";
 
         try {
             self::getConexion();
-            $IdCliente = $this->getIdCliente();
+            $Cedula = $this->getCedula();
 
             $resultado = self::$cnx->prepare($query);
-            $resultado->bindParam(":IdCliente", $IdCliente, PDO::PARAM_INT);
+            $resultado->bindParam(":Cedula", $Cedula, PDO::PARAM_INT);
             $resultado->execute();
             self::desconectar();
 
@@ -415,7 +404,7 @@ class Cliente extends Conexion
 
     public function obtenerCliente()
     {
-        $query = "SELECT IdCliente, nombre, apellido, correo FROM cliente";
+        $query = "SELECT Cedula, nombreCliente, apellidoCliente, correo FROM cliente";
 
         $clientes = array();
 
@@ -441,19 +430,19 @@ class Cliente extends Conexion
     {
         $query = "UPDATE cliente 
                     SET contrasena = :contrasena 
-                    WHERE IdCliente = :IdCliente";
+                    WHERE Cedula = :Cedula";
 
         try {
             self::getConexion();
 
             $contrasena = $this->getContrasena();
-            $IdCliente = $this->getIdCliente();
+            $Cedula = $this->getCedula();
 
 
             $resultado = self::$cnx->prepare($query);
 
             $resultado->bindParam(":contrasena", $contrasena, PDO::PARAM_STR);
-            $resultado->bindParam(":IdCliente", $IdCliente, PDO::PARAM_STR);
+            $resultado->bindParam(":Cedula", $Cedula, PDO::PARAM_STR);
 
 
             self::$cnx->beginTransaction(); // Desactiva el autocommit

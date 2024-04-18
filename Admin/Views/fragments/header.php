@@ -33,6 +33,21 @@
                     </ul>
                 </li>
 
+                <li class="has-sub">
+                    <a href="#">
+                        <i class="fas fa-shopping-basket"></i>Usuarios
+                        <span class="bot-line" style="background-color: #385059;"></span>
+                    </a>
+                    <ul class="header3-sub-list list-unstyled">
+                        <li>
+                            <a href="listaClientes.php">Lista de Clientes</a>
+                        </li>
+                        <li>
+                            <a href="listaEmpleados.php">Lista de Empleados</a>
+                        </li>
+                    </ul>
+                </li>
+
 
                 <li class="has-sub">
                     <a href="#">

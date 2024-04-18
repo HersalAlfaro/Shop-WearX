@@ -19,7 +19,6 @@ require_once '../../admin/config/conexion.php';
     <title>WearX Admin</title>
 
     <!-- Fontfaces CSS-->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
     <link href="dist/css/font-face.css" rel="stylesheet" media="all">
     <link href="dist/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -232,6 +231,8 @@ require_once '../../admin/config/conexion.php';
         <script src="dist/vendor/chartjs/Chart.bundle.min.js"></script>
         <script src="dist/vendor/select2/select2.min.js"></script>
         <script src="dist/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest/dist/sweetalert2.all.min.js"></script>
+
 
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 

@@ -9,14 +9,10 @@ switch ($_GET["op"]) {
         $data = array();
         foreach ($clientes as $reg) {
             $data[] = array(
-                "0" => $reg->getIdCliente(),
-                "1" =>  $reg->getCorreo(),
-                "2" =>  $reg->getNombre(),
-                "3" =>  $reg->getApellido(),
-                "4" => $reg->getTelefono(),
-                "5" =>  $reg->getProvincia(),
-
-                // Agrega otros campos según tus necesidades
+                "0" => $reg->getCedula(),
+                "1" =>  $reg->getNombreCliente(),
+                "2" =>  $reg->getApellidoCliente(),
+                "3" =>  $reg->getCorreo()
             );
         }
         $resultados = array(
@@ -29,10 +25,14 @@ switch ($_GET["op"]) {
         break;
 
     case 'insertar':
-        // Asegúrate de recibir y validar todos los datos necesarios
-        $nombre = isset($_POST["nombre"]) ? trim($_POST["nombre"]) : "";
-        $apellido = isset($_POST["apellido"]) ? trim($_POST["apellido"]) : "";
+
+        $Cedula = isset($_POST["Cedula"]) ? trim($_POST["Cedula"]) : 0;
+        $nombreCliente = isset($_POST["nombreCliente"]) ? trim($_POST["nombreCliente"]) : "";
+        $apellidoCliente = isset($_POST["apellidoCliente"]) ? trim($_POST["apellidoCliente"]) : "";
+        $segundoApCliente = isset($_POST["segundoApCliente"]) ? trim($_POST["segundoApCliente"]) : "";
+        $genero = isset($_POST["genero"]) ? trim($_POST["genero"]) : "";
         $correo = isset($_POST["correo"]) ? trim($_POST["correo"]) : "";
+
         $contrasena = isset($_POST["contrasena"]) ? trim($_POST["contrasena"]) : "";
         if (strlen($contrasena) < 8) {
             echo 'La contraseña debe tener al menos 8 caracteres.';
@@ -40,7 +40,7 @@ switch ($_GET["op"]) {
         }
         $contrasena = hash('SHA256', $contrasena);
 
-        $telefono = isset($_POST["telefono"]) ? trim($_POST["telefono"]) : "";
+        $telefono = isset($_POST["telefono"]) ? trim($_POST["telefono"]) :  "";
         if (strlen($telefono) != 8) {
             echo 'El teléfono debe tener exactamente 8 dígitos.';
             exit;
@@ -55,21 +55,22 @@ switch ($_GET["op"]) {
         $cliente = new Cliente();
 
         // Configura los atributos del objeto Cliente
+        $cliente->setCedula($Cedula);
         $cliente->setCorreo($correo);
-        $cliente->setTelefono($telefono);
         $encontrado = $cliente->verificarExistenciaCliente();
         if ($encontrado == false) {
-            $cliente->setNombre($nombre);
-            $cliente->setApellido($apellido);
-            $cliente->setContrasena($contrasena);
+            $cliente->setNombreCliente($nombreCliente);
+            $cliente->setApellidoCliente($apellidoCliente);
+            $cliente->setSegundoApCliente($segundoApCliente);
+            $cliente->setGenero($genero);
             $cliente->setTelefono($telefono);
+            $cliente->setContrasena($contrasena);
             $cliente->setTipoCliente($tipoCliente);
             $cliente->setProvincia($provincia);
             $cliente->setDistrito($distrito);
             $cliente->setCanton($canton);
             $cliente->setOtros($otros);
             $cliente->guardarEnDb();
-
             
             if ($cliente->verificarExistenciaCliente()) {
                 echo 1;
@@ -82,10 +83,10 @@ switch ($_GET["op"]) {
         break;
 
     case 'verificar_existencia_cliente':
-        $IdCliente = isset($_POST["IdCliente"]) ? trim($_POST["IdCliente"]) : "";
+        $Cedula = isset($_POST["Cedula"]) ? trim($_POST["Cedula"]) : "";
         $correo = isset($_POST["correo"]) ? trim($_POST["correo"]) : "";
         $cliente->setCorreo($correo);
-        $cliente->setIdCliente($IdCliente);
+        $cliente->setCedula($Cedula);
         $encontrado = $cliente->verificarExistenciaCliente();
         echo $encontrado ? 1 : 0;
         break;
@@ -93,7 +94,7 @@ switch ($_GET["op"]) {
 
 
     case 'editar':
-        $IdCliente = isset($_POST["IdCliente"]) ? trim($_POST["IdCliente"]) : "";
+        $Cedula = isset($_POST["Cedula"]) ? trim($_POST["Cedula"]) : "";
         $nombre = isset($_POST["nombre"]) ? trim($_POST["nombre"]) : "";
         $apellido = isset($_POST["apellido"]) ? trim($_POST["apellido"]) : "";
         $telefono = isset($_POST["telefono"]) ? trim($_POST["telefono"]) : "";
@@ -108,14 +109,16 @@ switch ($_GET["op"]) {
         $otros = isset($_POST["otros"]) ? trim($_POST["otros"]) : "";
 
         $cliente = new Cliente();
+        $cliente->setCedula($cedula);
         $cliente->setTelefono($telefono);
+        $cliente->setCorreo($correo);
         $encontrado = $cliente->verificarExistenciaCliente();
-
         if ($encontrado == false) {
-            $cliente->setIdCliente($IdCliente);
-            $cliente->setNombre($nombre);
-            $cliente->setApellido($apellido);
-            $cliente->setTelefono($telefono);
+            $cliente->setNombreCliente($nombreCliente);
+            $cliente->setApellidoCliente($apellidoCliente);
+            $cliente->setSegundoApCliente($segundoApCliente);
+            $cliente->setGenero($genero);
+            $cliente->setContrasena($contrasena);
             $cliente->setTipoCliente($tipoCliente);
             $cliente->setProvincia($provincia);
             $cliente->setDistrito($distrito);
@@ -133,9 +136,9 @@ switch ($_GET["op"]) {
         break;
 
     case 'obtener':
-        if (isset($_GET['IdCliente'])) {
-            $IdCliente = isset($_GET['IdCliente']) ? intval($_GET['IdCliente']) : null;
-            $cliente = Cliente::obtenerClientePorIdCliente($IdCliente);
+        if (isset($_GET['Cedula'])) {
+            $Cedula = isset($_GET['Cedula']) ? intval($_GET['Cedula']) : null;
+            $cliente = Cliente::obtenerClientePorCedula($Cedula);
 
             if ($cliente) {
                 echo json_encode($cliente);
@@ -143,15 +146,15 @@ switch ($_GET["op"]) {
                 echo json_encode(["error" => "No se encontró el cliente"]);
             }
         } else {
-            echo json_encode(["error" => "IdCliente del cliente no proporcionada"]);
+            echo json_encode(["error" => "Cedula del cliente no proporcionada"]);
         }
         break;
 
     case 'eliminar':
-        if (isset($_POST['id'])) {
-            $IdCliente = intval($_POST['id']);
+        if (isset($_POST['ced'])) {
+            $Cedula = intval($_POST['ced']);
             $cliente = new cliente();
-            $cliente->setIdCliente($IdCliente);
+            $cliente->setCedula($Cedula);
 
             $resultado = $cliente->eliminarcliente();
 
@@ -161,7 +164,7 @@ switch ($_GET["op"]) {
                 echo json_encode(["error" => "No se pudo eliminar el cliente"]);
             }
         } else {
-            echo json_encode(["error" => "Id del cliente no proporcionado"]);
+            echo json_encode(["error" => "Cedula del cliente no proporcionado"]);
         }
         break;
 
@@ -171,47 +174,4 @@ switch ($_GET["op"]) {
         echo json_encode($clientes);
         break;
 
-    case 'editarCliente':
-        $IdCliente = isset($_POST["IdCliente"]) ? trim($_POST["IdCliente"]) : "";
-        $nombre = isset($_POST["nombre"]) ? trim($_POST["nombre"]) : "";
-        $apellido = isset($_POST["apellido"]) ? trim($_POST["apellido"]) : "";
-        $contrasena = isset($_POST["contrasena"]) ? trim($_POST["contrasena"]) : "";
-        if (strlen($contrasena) < 8) {
-            echo 'La contraseña debe tener al menos 8 caracteres.';
-            exit;
-        }
-        $contrasena = hash('SHA256', $contrasena);
-        $telefono = isset($_POST["telefono"]) ? trim($_POST["telefono"]) : "";
-        if (strlen($telefono) != 8) {
-            echo 'El teléfono debe tener exactamente 8 dígitos.';
-            exit;
-        }
-        $provincia = isset($_POST["provincia"]) ? trim($_POST["provincia"]) : "";
-        $distrito = isset($_POST["distrito"]) ? trim($_POST["distrito"]) : "";
-        $canton = isset($_POST["canton"]) ? trim($_POST["canton"]) : "";
-        $otros = isset($_POST["otros"]) ? trim($_POST["otros"]) : "";
-
-        $cliente = new Cliente();
-        $encontrado = $cliente->verificarExistenciaCliente();
-
-        if ($encontrado == false) {
-            $cliente->setIdCliente($IdCliente);
-            $cliente->setNombre($nombre);
-            $cliente->setApellido($apellido);
-            $cliente->setContrasena($contrasena);
-            $cliente->setTelefono($telefono);
-            $cliente->setProvincia($provincia);
-            $cliente->setDistrito($distrito);
-            $cliente->setCanton($canton);
-            $cliente->setOtros($otros);
-
-            if ($cliente->actualizarClienteVC()) {
-                echo 1; //exito en la actualizacion
-            } else {
-                echo 2;  //Error al guardar en la base de datos
-            }
-        } else {
-            echo 3; //Este valor se muestra si el cliente no existe
-        }
-        break;
 }
