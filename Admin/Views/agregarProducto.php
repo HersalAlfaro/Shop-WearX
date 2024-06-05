@@ -70,19 +70,10 @@ require_once '../../admin/config/conexion.php';
             </section>
             <!-- END BREADCRUMB-->
 
-            <!-- STATISTIC-->
-            <section class="statistic statistic2">
-              
-
-
                 <div class="content-wrapper">
 
                     <!-- Content -->
-
                     <div class="container flex-grow-1">
-
-                        <div class="app-ecommerce">
-
                             <!-- Add Product -->
                             <form method="POST" name="modulos_add" id="agregarProducto">
 
@@ -144,50 +135,15 @@ require_once '../../admin/config/conexion.php';
                                             <div class="card-header">
                                                 <h5 class="card-title mb-0">Variantes</h5>
                                             </div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <!-- Input Field para Size -->
-                                                    <div class="mb-3 col-12">
-                                                        <label class="form-label" for="sizeProducto">Size</label>
-                                                        <input type="text" class="form-control" id="sizeProducto" name="sizeProducto" placeholder="Ingrese Size" required>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="mb-3 col-12">
-                                                        <label class="form-label" for="color">Color</label>
-                                                        <input type="text" class="form-control" id="color" name="color" placeholder="Ingrese Color" required>
-                                                    </div>
-                                                </div>
+                                            <div class="card-body" id="variantesContainer">
+                                                <!-- Aquí se agregarán dinámicamente las variantes -->
+                                            </div>
+                                            <div class="card-footer" id="footerButtons">
+                                                <button type="button" class="btn btn-primary" onclick="agregarVariante()">Agregar Variante</button>
+                                                <button type="button" class="btn btn-danger" onclick="eliminarUltimaVariante()" id="eliminarVarianteBtn">Eliminar Variante</button>
                                             </div>
                                         </div>
                                         <!-- /Variants -->
-
-                                        <!-- Inventory -->
-                                        <div class="card mb-4">
-                                            <div class="card-header">
-                                                <h5 class="card-title mb-0">Inventario</h5>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <!-- Options -->
-                                                    <div class="col-12 pt-4 pt-md-0">
-                                                        <div class=" p-0">
-                                                            <div class="tab-pane fade show active" id="restock" role="tabpanel">
-                                                                <h5>Stock</h5>
-                                                                <label class="form-label" for="enStock">Añadir Stock</label>
-                                                                <div class="row mb-3 g-3">
-                                                                    <div class="col-12 ">
-                                                                        <input type="number" class="form-control" id="enStock" placeholder="Stock" name="enStock" aria-label="Stock" required>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- /Options-->
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- /Inventory -->
 
                                     </div>
 
@@ -240,27 +196,17 @@ require_once '../../admin/config/conexion.php';
                                     <!-- /Second column -->
                                 </div>
                             </form>
-                        </div>
                     </div>
                     <!-- / Content -->
-
                     <div class="content-backdrop fade"></div>
                 </div>
-            </section>
+          
             <!-- END DATA TABLE-->
 
             <!-- COPYRIGHT-->
-            <section class="p-t-60 p-b-20">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="copyright">
-                                <p>Copyright © 2024 Colorlib X WearX. Todos los derechos Reservados.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <?php
+            include 'fragments/footer.php'
+            ?>
             <!-- END COPYRIGHT-->
         </div>
 
@@ -287,6 +233,47 @@ require_once '../../admin/config/conexion.php';
 
     <!-- Main JS-->
     <script src="dist/js/main.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            agregarVariante();
+        });
+
+        function agregarVariante() {
+            var variantesContainer = document.getElementById('variantesContainer');
+
+            // Crear un nuevo conjunto de campos de variante
+            var nuevaVariante = document.createElement('div');
+            nuevaVariante.classList.add('row', 'mb-3');
+
+            nuevaVariante.innerHTML = `
+            <div class="col-4">
+                <label class="form-label">Size</label>
+                <input type="text" class="form-control" name="sizeProducto[]" placeholder="Ingrese Size" required>
+            </div>
+            <div class="col-4">
+                <label class="form-label">Color</label>
+                <input type="text" class="form-control" name="color[]" placeholder="Ingrese Color" required>
+            </div>
+            <div class="col-4">
+                <label class="form-label">Stock</label>
+                <input type="number" class="form-control" name="enStock[]" placeholder="Ingrese el Stock" required>
+            </div>
+        `;
+
+            variantesContainer.appendChild(nuevaVariante);
+        }
+
+        function eliminarUltimaVariante() {
+            var variantesContainer = document.getElementById('variantesContainer');
+            var variantes = variantesContainer.getElementsByClassName('row');
+
+            if (variantes.length > 0) {
+                var ultimaVariante = variantes[variantes.length - 1];
+                ultimaVariante.remove();
+            }
+        }
+    </script>
 
     <script>
         function mostrarImagen(event) {

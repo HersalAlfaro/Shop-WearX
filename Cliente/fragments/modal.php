@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-5"><a class="btn btn-dark btn-sm w-100 h-100 d-flex align-items-center justify-content-center px-0" href="cart.html">Añadir al carrito</a></div>
-                        </div><a class="btn btn-link text-dark text-decoration-none p-0" href="#!"><i class="far fa-heart me-2"></i>Añadir a lista de deseados</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -354,31 +354,28 @@ class Cliente extends Conexion
     }
 
 
-    public static function obtenerClientePorCedula($Cedula)
+    public function obtenerClientePorCedula($Cedula)
     {
         $query = "SELECT * FROM clientes WHERE Cedula = :Cedula";
+        $cliente = array();
+
         try {
-            // Conecta a la base de datos
             self::getConexion();
-
-            // Prepara la consulta
             $stmt = self::$cnx->prepare($query);
-
-            // Asigna el valor de la cédula y ejecuta la consulta
-            $stmt->bindParam(":Cedula", $Cedula, PDO::PARAM_INT);
+            $stmt->bindParam(':Cedula', $Cedula, PDO::PARAM_INT);
             $stmt->execute();
 
-            // Obtiene los resultados y los devuelve como un arreglo asociativo
+
             $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Cierra la conexión a la base de datos
             self::desconectar();
-
-            return $cliente;
-        } catch (PDOException $e) {
-            // Manejo de errores, por ejemplo, loguear el error
-            return null;
+        } catch (PDOException $Exception) {
+            self::desconectar();
+            $error = "Error " . $Exception->getCode() . ": " . $Exception->getMessage();
+            return array("error" => $error);
         }
+
+        return $cliente;
     }
 
     public function eliminarcliente()
@@ -404,7 +401,7 @@ class Cliente extends Conexion
 
     public function obtenerCliente()
     {
-        $query = "SELECT Cedula, nombreCliente, apellidoCliente, correo FROM cliente";
+        $query = "SELECT Cedula, nombreCliente, apellidoCliente, segundoApCliente, correo, provincia, distrito, canton, otros FROM clientes";
 
         $clientes = array();
 
@@ -449,9 +446,7 @@ class Cliente extends Conexion
 
             $resultado->execute();
             self::$cnx->commit(); // Realiza el commit y vuelve al modo autocommit
-
-
-
+            self::desconectar();
             if ($resultado->rowCount() > 0) {
                 return true;
             } else {
@@ -460,7 +455,6 @@ class Cliente extends Conexion
 
 
 
-            self::desconectar();
         } catch (PDOException $Exception) {
             self::$cnx->rollBack();
             self::desconectar();

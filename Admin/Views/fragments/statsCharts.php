@@ -8,13 +8,13 @@
         <div class="col-md-6 col-lg-4">
             <!-- CHART-->
             <div class="statistic-chart-1">
-                <h3 class="title-3 m-b-30">chart</h3>
+                <h3 class="title-3 m-b-30">Stock</h3>
                 <div class="chart-wrap">
                     <canvas id="widgetChart5"></canvas>
                 </div>
                 <div class="statistic-chart-1-note">
                     <span class="big">10,368</span>
-                    <span>/ 16220 items sold</span>
+                    <span>/ ventas</span>
                 </div>
             </div>
             <!-- END CHART-->
@@ -22,29 +22,13 @@
         <div class="col-md-6 col-lg-4">
             <!-- TOP CAMPAIGN-->
             <div class="top-campaign">
-                <h3 class="title-3 m-b-30">top campaigns</h3>
+                <h3 class="title-3 m-b-30">Producto más vendido</h3>
                 <div class="table-responsive">
                     <table class="table table-top-campaign">
                         <tbody>
                             <tr>
-                                <td>1. Australia</td>
-                                <td>$70,261.65</td>
-                            </tr>
-                            <tr>
                                 <td>2. United Kingdom</td>
                                 <td>$46,399.22</td>
-                            </tr>
-                            <tr>
-                                <td>3. Turkey</td>
-                                <td>$35,364.90</td>
-                            </tr>
-                            <tr>
-                                <td>4. Germany</td>
-                                <td>$20,366.96</td>
-                            </tr>
-                            <tr>
-                                <td>5. France</td>
-                                <td>$10,366.96</td>
                             </tr>
                         </tbody>
                     </table>
@@ -55,7 +39,7 @@
         <div class="col-md-6 col-lg-4">
             <!-- CHART PERCENT-->
             <div class="chart-percent-2">
-                <h3 class="title-3 m-b-30">chart by %</h3>
+                <h3 class="title-3 m-b-30">Porcentaje de ventas %</h3>
                 <div class="chart-wrap">
                     <canvas id="percent-chart2"></canvas>
                     <div id="chartjs-tooltip">
@@ -65,11 +49,11 @@
                 <div class="chart-info">
                     <div class="chart-note">
                         <span class="dot dot--blue"></span>
-                        <span>products</span>
+                        <span>Productos</span>
                     </div>
                     <div class="chart-note">
                         <span class="dot dot--red"></span>
-                        <span>Services</span>
+                        <span>Ventas</span>
                     </div>
                 </div>
             </div>

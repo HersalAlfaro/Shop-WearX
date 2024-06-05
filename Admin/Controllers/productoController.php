@@ -55,11 +55,14 @@ switch ($_GET["op"]) {
         $nombreProducto = isset($_POST["nombreProducto"]) ? trim($_POST["nombreProducto"]) : "";
         $descripcionProducto = isset($_POST["descripcionProducto"]) ? trim($_POST["descripcionProducto"]) : "";
         $precio = isset($_POST["precio"]) ? number_format(trim($_POST["precio"]), 2, '.', '') : '0.00';
-        $enStock = isset($_POST["enStock"]) ? (int)trim($_POST["enStock"]) : 0;
         $estadoProducto = isset($_POST["estadoProducto"]) ? trim($_POST["estadoProducto"]) : "";
         $categoriaID = isset($_POST["categoriaID"]) ? intval($_POST["categoriaID"]) : 0;
-        $sizeProducto = isset($_POST["sizeProducto"]) ? trim($_POST["sizeProducto"]) : "";
-        $color = isset($_POST["color"]) ? trim($_POST["color"]) : "";
+
+        $sizeProducto = isset($_POST["sizeProducto"]) ? $_POST["sizeProducto"] : array();
+        $color = isset($_POST["color"]) ? $_POST["color"] : array();
+        $enStock = isset($_POST["enStock"]) ? $_POST["enStock"] : array();
+
+
 
         // Crear un nuevo objeto Producto
         $producto = new Producto();
@@ -75,16 +78,41 @@ switch ($_GET["op"]) {
             $producto->setEnStock($enStock);
             $producto->setEstadoProducto($estadoProducto);
             $producto->setCategoriaProducto($categoriaID);
-            $producto->setSizeProducto($sizeProducto);
-            $producto->setColor($color);
-            $producto->insertar();
-            if ($producto->verificarProducto()) {
+            $codigoProducto = $producto->insertar();
+
+            // Verificar que se haya insertado el producto correctamente y obtener su código
+            if (!empty($codigoProducto)) {
+                // Iterar sobre los atributos proporcionados (tamaño, color, enStock)
+                for ($i = 0; $i < count($sizeProducto); $i++) {
+                    $size = $sizeProducto[$i];
+                    $colorItem = $color[$i];
+                    $enStockItem = $enStock[$i];
+                    // Llamar al método para insertar los atributos en la base de datos
+                    $producto->insertarAtributos($codigoProducto, $size, $colorItem, $enStockItem);
+                }
                 echo 1; // Éxito
             } else {
-                echo 2;
+                echo "Error: No se pudo insertar el producto.";
             }
         } else {
             echo 3;
+        }
+        break;
+
+    case 'obtenerProductoPorCodigo':
+        if (isset($_POST['codigoProducto'])) {
+            $codigoProducto = intval($_POST['codigoProducto']);
+            $producto = new Producto(); // Crear una instancia de la clase Producto
+            $productoEncontrado = $producto->obtenerProductoPorCodigo($codigoProducto); // Obtener el producto por su código
+
+            if ($productoEncontrado) {
+                // Devuelve los datos del producto encontrado en formato JSON
+                echo json_encode($productoEncontrado);
+            } else {
+                echo json_encode(["error" => "No se encontró el producto"]);
+            }
+        } else {
+            echo json_encode(["error" => "Código del producto no proporcionado"]);
         }
         break;
 
@@ -128,7 +156,7 @@ switch ($_GET["op"]) {
         $categorias = $producto->obtenerCategorias();
         echo json_encode($categorias);
         break;
-        
+
 
     case 'obtenerProductoCliente':
         try {
@@ -163,20 +191,11 @@ switch ($_GET["op"]) {
         break;
 
 
-    case 'obtenerProductoPorCodigo':
-        if (isset($_POST['codigoProducto'])) {
-            $codigoProducto = intval($_POST['codigoProducto']);
-            $producto = new Producto(); // Crear una instancia de la clase Producto
-            $productoEncontrado = $producto->obtenerProductoPorCodigo($codigoProducto); // Obtener el producto por su código
 
-            if ($productoEncontrado) {
-                // Devuelve los datos del producto encontrado en formato JSON
-                echo json_encode($productoEncontrado);
-            } else {
-                echo json_encode(["error" => "No se encontró el producto"]);
-            }
-        } else {
-            echo json_encode(["error" => "Código del producto no proporcionado"]);
-        }
+
+    case 'cargarProducto':
+        $productoModel = new Producto();
+        $productos = $productoModel->obtenerProductos();
+        echo json_encode($productos);
         break;
 }

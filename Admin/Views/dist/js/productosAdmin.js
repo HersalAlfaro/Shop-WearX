@@ -47,7 +47,7 @@ function listarProductos() {
         },
         columns: [
             { data: "0", visible: true },
-             // Codigo 
+            // Codigo 
             {
                 data: null,
                 render: function (data, type, row) {
@@ -73,8 +73,8 @@ function listarProductos() {
                     `;
                 }
             },
-             // Descrip 
-             {
+            // Descrip 
+            {
                 data: null,
                 render: function (data, type, row) {
                     return `
@@ -86,8 +86,8 @@ function listarProductos() {
                     `;
                 }
             },
-             // Cantidad 
-             {
+            // Cantidad 
+            {
                 data: null,
                 render: function (data, type, row) {
                     return `
@@ -99,7 +99,7 @@ function listarProductos() {
                     `;
                 }
             },
-             // precio 
+            // precio 
             {
                 data: null,
                 render: function (data, type, row) {
@@ -108,7 +108,7 @@ function listarProductos() {
                         <button class="item" data-toggle="tooltip" data-placement="top" title="Borrar" data-cod="${data[0]}">
                             <i class="zmdi zmdi-delete"></i>
                         </button>
-                        <button class="item" data-toggle="tooltip" data-placement="top" title="Editar" data-cod="${data[0]}" onclick="window.location.href='editarProducto.php?Codigo=${data[0]}'">
+                        <button id="modificarProducto" class="item" data-toggle="tooltip" data-placement="top" title="Editar" data-cod="${data[0]}">
                             <i class="zmdi zmdi-edit"></i>
                         </button>
                         <button class="item" data-toggle="tooltip" data-placement="top" title="Ver" data-cod="${data[0]}" onclick="window.location.href='verProducto.php?Codigo=${data[0]}'">
@@ -195,7 +195,7 @@ $(document).ready(function () {
 
         // Llama a la función cargarProductosPorCodigo para llenar los campos del modal
         cargarProductosPorCodigo(codigoProducto);
-        
+
     });
 });
 
@@ -208,25 +208,52 @@ function cargarProductosPorCodigo(codigoProducto) {
         data: { codigoProducto: codigoProducto },
         success: function (data) {
             if (data && !data.error) {
-
                 console.log(data);
-                // Asignar valores a los campos del modal
                 // Llenar el modal con los datos del producto
                 $('#modalActualizar #modalTitle').text(data.nombreProducto);
-                $('#modalActualizar #modalContent').html(`
-                         <p>Categoría: ${data.nombreCategoria}</p>
-                         <p>Precio: ₡${data.precio}</p>
-                         <p>Descripción: ${data.descripcionProducto}</p>
-                         <p>En stock: ${data.enStock}</p>
-                         <p>Color: ${data.color}</p>
-                         <p>Tamaño: ${data.sizeProducto}</p>
-                         <p>Estado: ${data.estadoProducto}</p>
-                         <p>Código Producto: ${data.codigoProducto}</p>
-                         <img src="../../Admin/Views/dist/images/${data.imagenURLProducto}" alt="${data.nombreProducto}" style="max-width: 100px;">
-                     `);
+                $('#nombreProducto').val(data.nombreProducto);
+                $('#descripcionProducto').val(data.descripcionProducto);
+                $('#precio').val(data.precio);
+                $('#EcategoriaID').val(data.categoriaID); // Establecer la categoría seleccionada
 
-                // Mostrar el modal
-                
+                let modalContent = `
+                    <form id="formActualizarProducto">
+                        <input type="hidden" name="codigoProducto" value="${codigoProducto}">
+                        <div class="form-group">
+                            <label for="nombreProducto">Nombre:</label>
+                            <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" value="${data.nombreProducto}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcionProducto">Descripción:</label>
+                            <textarea class="form-control" id="descripcionProducto" name="descripcionProducto" required>${data.descripcionProducto}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="precio">Precio:</label>
+                            <input type="number" class="form-control" id="precio" name="precio" value="${data.precio}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="EcategoriaID">Categoría:</label>
+                            <select id="EcategoriaID" name="EcategoriaID" class="form-control" required>
+                                <option value="${data.categoriaID}" selected>${data.nombreCategoria}</option>
+                            </select>
+                        </div>
+
+                        <p class="mt-3">Atributos:</p>`;
+
+                data.atributos.split(',').forEach(atributo => {
+                    const [talla, color, stock] = atributo.split(':');
+                    modalContent += `
+                                <div class="form-group">
+                                    <label for="talla${talla}Color${color}">Stock para talla ${talla} y color ${color}:</label>
+                                    <input type="number" class="form-control" id="talla${talla}Color${color}" name="tallaColorStock[]" value="${stock}" required>
+                                    <input type="hidden" name="tallaColor[]" value="${talla},${color}">
+                                </div>`;
+                });
+
+                modalContent += `
+                            </form>`;
+
+                $('#modalActualizar #modalContent').html(modalContent);
             } else {
                 console.error('Error al cargar el producto:', data.error);
             }
@@ -369,13 +396,17 @@ function eliminarProducto(cod) {
 }
 
 
+$(document).ready(function() {
+    cargarCategorias();
+});
+
 function cargarCategorias() {
     $.ajax({
         url: '../../admin/Controllers/productoController.php?op=obtenerCategorias',
         type: 'POST',
         dataType: 'json',
         success: function (data) {
-            var selectCategoria = $('#categoriaID');
+            var selectCategoria = $('#categoriaID, #EcategoriaID');
 
             selectCategoria.empty();
             selectCategoria.append('<option value="" disabled selected>Seleccionar Categoría</option>');
@@ -392,11 +423,6 @@ function cargarCategorias() {
         }
     });
 }
-
-
-
-cargarCategorias();
-
 
 
 

@@ -25,7 +25,7 @@ function obtenerProductos() {
                                   <div class="product text-center">
                                       <div class="position-relative mb-3">
                                           <div class="badge text-white bg-"></div>
-                                          <a class="d-block" href="detail.php?codigoProducto=${producto.codigoProducto}">
+                                          <a class="d-block" href="detalle.php?codigoProducto=${producto.codigoProducto}">
                                           <img class="img-fluid w-100" src="img/Street_Dreams.png" alt="${producto.nombreProducto}">
                                         </a>
                                           <div class="product-overlay">
@@ -35,7 +35,7 @@ function obtenerProductos() {
                                               </ul>
                                           </div>
                                       </div>
-                                      <h6><a class="reset-anchor" href="detail.php">${producto.nombreProducto}</a></h6>
+                                      <h6><a class="reset-anchor" href="detalle.php">${producto.nombreProducto}</a></h6>
                                       <p class="small text-muted">₡ ${producto.precio}</p>
                                       </div>
                               </div>
@@ -74,7 +74,7 @@ function obtenerProductosTienda() {
           <div class="product text-center">
             <div class="mb-3 position-relative">
               <div class="badge text-white bg-primary">Nuevo</div>
-              <a class="d-block" href="detail.php?codigoProducto=${producto.codigoProducto}">
+              <a class="d-block" href="detalle.php?codigoProducto=${producto.codigoProducto}">
               <img class="img-fluid w-100" src="img/Street_Dreams.png" alt="${producto.nombreProducto}">
             </a>
               <div class="product-overlay">

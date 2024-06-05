@@ -73,41 +73,32 @@ require_once '../../admin/config/conexion.php';
             <!-- END BREADCRUMB-->
 
             <div class="content-wrapper">
-
                 <!-- Content -->
-
                 <div class="container flex-grow-1 container-p-y">
-
                     <!-- DataTable with Buttons -->
                     <div class="container" id="listaCategorias">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3 class="title-5 m-b-35">Lista Categorias</h3>
-                                <div class="table-data__tool">
-                                    <div class="table-data__tool-right">
-                                        <?php
-                                        include 'fragments/agregarCategoria.php'
-                                        ?>
-                                    </div>
-                                </div>
+                        <h3 class="title-5 m-b-35">Lista Categorias</h3>
+                        <div class="table-data__tool">
+                            <div class="table-data__tool-right">
+                                <?php
+                                include 'fragments/agregarCategoria.php'
+                                ?>
+                            </div>
+                        </div>
 
 
-                                <div class="card">
-                                    <div class="card-datatable table-responsive">
-                                        <table class="datatables-basic table border-top" id="lista-categorias">
-                                            <thead>
-                                                <tr>
-                                                    <th>Codigo</th>
-                                                    <th>Nombre</th>
-                                                    <th>Productos con Categoria</th>
-                                                    <th class="text-end">Acciones</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-
-
+                        <div class="card">
+                            <div class="card-datatable table-responsive">
+                                <table class="datatables-basic table border-top" id="lista-categorias">
+                                    <thead>
+                                        <tr>
+                                            <th>Codigo</th>
+                                            <th>Nombre</th>
+                                            <th>Productos con Categoria</th>
+                                            <th class="text-end">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -115,17 +106,9 @@ require_once '../../admin/config/conexion.php';
                 </div>
 
                 <!-- COPYRIGHT-->
-                <section class="p-t-60 p-b-20">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="copyright">
-                                    <p>Copyright © 2024 Colorlib X WearX. Todos los derechos Reservados.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <?php
+                include 'fragments/footer.php'
+                ?>
                 <!-- END COPYRIGHT-->
             </div>
 

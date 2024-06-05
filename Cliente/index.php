@@ -51,7 +51,7 @@
           <div class="row px-4 px-lg-5">
             <div class="col-lg-6">
               <p class="text-muted small text-uppercase mb-2">Nuevos Ingresos</p>
-              <h1 class="h2 text-uppercase mb-3">20% off en nueva temporada</h1><a class="btn btn-dark" href="shop.php">Buscar Colección</a>
+              <h1 class="h2 text-uppercase mb-3">20% off en nueva temporada</h1><a class="btn btn-dark" href="tienda.php">Buscar Colección</a>
             </div>
           </div>
         </div>
@@ -65,11 +65,11 @@
           <h2 class="h5 text-uppercase mb-4">Busca tu categoria</h2>
         </header>
         <div class="row">
-          <div class="col-md-4"><a class="category-item" href="shop.php"><img class="img-fluid" src="img/hoodie-negro.jpeg" alt="" /><strong class="category-item-title">T-Shirts</strong></a>
+          <div class="col-md-4"><a class="category-item" href="tienda.php"><img class="img-fluid" src="img/hoodie-negro.jpeg" alt="" /><strong class="category-item-title">T-Shirts</strong></a>
           </div>
-          <div class="col-md-4"><a class="category-item mb-4" href="shop.php"><img class="img-fluid" src="img/hoodie-negro.jpeg" alt="hododie" /><strong class="category-item-title">Hoodies</strong></a>
+          <div class="col-md-4"><a class="category-item mb-4" href="tienda.php"><img class="img-fluid" src="img/hoodie-negro.jpeg" alt="hododie" /><strong class="category-item-title">Hoodies</strong></a>
           </div>
-          <div class="col-md-4"><a class="category-item" href="shop.php"><img class="img-fluid" src="img/hoodie-negro.jpeg" alt="" /><strong class="category-item-title">Hoodies</strong></a>
+          <div class="col-md-4"><a class="category-item" href="tienda.php"><img class="img-fluid" src="img/hoodie-negro.jpeg" alt="" /><strong class="category-item-title">Hoodies</strong></a>
           </div>
         </div>
       </section>

@@ -19,8 +19,6 @@ require_once '../../admin/config/conexion.php';
     <title>WearX Admin</title>
 
     <!-- Fontfaces CSS-->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-
     <link href="dist/css/font-face.css" rel="stylesheet" media="all">
     <link href="dist/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
     <link href="dist/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
@@ -35,8 +33,9 @@ require_once '../../admin/config/conexion.php';
     <link href="dist/vendor/wow/animate.css" rel="stylesheet" media="all">
     <link href="dist/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
     <link href="dist/vendor/slick/slick.css" rel="stylesheet" media="all">
-    <link href="dist/vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="dist/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+    <link href="dist/vendor/select2/css/select2.min.css" rel="stylesheet" media="all">
+
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <!-- Main CSS-->
     <link href="dist/css/theme.css" rel="stylesheet" media="all">
@@ -73,60 +72,45 @@ require_once '../../admin/config/conexion.php';
             <!-- END BREADCRUMB-->
 
             <div class="content-wrapper">
-
                 <!-- Content -->
+                <?php
+                include 'fragments/editarCliente.php'
+                ?>
 
                 <div class="container flex-grow-1 container-p-y">
 
                     <!-- DataTable with Buttons -->
                     <div class="container" id="listaClientes">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3 class="title-5 m-b-35">Lista Clientes</h3>
-                                <div class="table-data__tool">
-                                    <div class="table-data__tool-right">
-                                        <?php
-                                        include 'fragments/agregarCliente.php'
-                                        ?>
-                                    </div>
-                                </div>
-
-
-                                <div class="card">
-                                    <div class="card-datatable table-responsive">
-                                        <table class="datatables-basic table border-top" id="lista-clientes">
-                                            <thead>
-                                                <tr>
-                                                    <th>Cedula</th>
-                                                    <th>Nombre</th>
-                                                    <th>Apellido</th>
-                                                    <th>Correo</th>
-                                                    <th class="text-end">Acciones</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-
-
+                        <h3 class="title-5 m-b-35">Lista Clientes</h3>
+                        <div class="table-data__tool">
+                            <div class="table-data__tool-right">
+                                <?php
+                                include 'fragments/agregarCliente.php'
+                                ?>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-datatable table-responsive">
+                                <table class="datatables-basic table border-top" id="lista-clientes">
+                                    <thead>
+                                        <tr>
+                                            <th>Cedula</th>
+                                            <th>Nombre</th>
+                                            <th>Apellido</th>
+                                            <th>Correo</th>
+                                            <th class="text-end">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
                     <!-- / Content -->
                 </div>
-
                 <!-- COPYRIGHT-->
-                <section class="p-t-60 p-b-20">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="copyright">
-                                    <p>Copyright © 2024 Colorlib X WearX. Todos los derechos Reservados.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <?php
+                include 'fragments/footer.php'
+                ?>
                 <!-- END COPYRIGHT-->
             </div>
 
@@ -146,7 +130,7 @@ require_once '../../admin/config/conexion.php';
         <script src="dist/vendor/circle-progress/circle-progress.min.js"></script>
         <script src="dist/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
         <script src="dist/vendor/chartjs/Chart.bundle.min.js"></script>
-        <script src="dist/vendor/select2/select2.min.js"></script>
+        <script src="dist/vendor/select2/js/select2.full.min.js"></script>
         <script src="dist/js/main.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest/dist/sweetalert2.all.min.js"></script>

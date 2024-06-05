@@ -215,6 +215,8 @@ strong {
 /* ----- Links ----- */
 a {
     display: inline-block;
+    text-decoration: none;
+    outline: none;
 }
 
 a:hover,
@@ -2677,10 +2679,12 @@ section {
     -moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+    
 }
 
 .header__navbar ul li {
     position: relative;
+    
 }
 
 .header__navbar ul li:last-child a {

@@ -71,7 +71,7 @@ switch ($_GET["op"]) {
             $cliente->setCanton($canton);
             $cliente->setOtros($otros);
             $cliente->guardarEnDb();
-            
+
             if ($cliente->verificarExistenciaCliente()) {
                 echo 1;
             } else {
@@ -91,26 +91,27 @@ switch ($_GET["op"]) {
         echo $encontrado ? 1 : 0;
         break;
 
-
-
     case 'editar':
-        $Cedula = isset($_POST["Cedula"]) ? trim($_POST["Cedula"]) : "";
-        $nombre = isset($_POST["nombre"]) ? trim($_POST["nombre"]) : "";
-        $apellido = isset($_POST["apellido"]) ? trim($_POST["apellido"]) : "";
-        $telefono = isset($_POST["telefono"]) ? trim($_POST["telefono"]) : "";
+        $nombreCliente = isset($_POST["EnombreCliente"]) ? trim($_POST["EnombreCliente"]) : "";
+        $apellidoCliente = isset($_POST["EapellidoCliente"]) ? trim($_POST["EapellidoCliente"]) : "";
+        $segundoApCliente = isset($_POST["EsegundoApCliente"]) ? trim($_POST["EsegundoApCliente"]) : "";
+        $genero = isset($_POST["Egenero"]) ? trim($_POST["Egenero"]) : "";
+        $correo = isset($_POST["Ecorreo"]) ? trim($_POST["Ecorreo"]) : "";
+
+
+
+        $telefono = isset($_POST["Etelefono"]) ? trim($_POST["Etelefono"]) :  "";
         if (strlen($telefono) != 8) {
             echo 'El teléfono debe tener exactamente 8 dígitos.';
             exit;
         }
-        $tipoCliente = isset($_POST["tipoCliente"]) ? trim($_POST["tipoCliente"]) : "";
-        $provincia = isset($_POST["provincia"]) ? trim($_POST["provincia"]) : "";
-        $distrito = isset($_POST["distrito"]) ? trim($_POST["distrito"]) : "";
-        $canton = isset($_POST["canton"]) ? trim($_POST["canton"]) : "";
-        $otros = isset($_POST["otros"]) ? trim($_POST["otros"]) : "";
+        $tipoCliente = isset($_POST["EtipoCliente"]) ? trim($_POST["EtipoCliente"]) : "";
+        $provincia = isset($_POST["Eprovincia"]) ? trim($_POST["Eprovincia"]) : "";
+        $distrito = isset($_POST["Edistrito"]) ? trim($_POST["Edistrito"]) : "";
+        $canton = isset($_POST["Ecanton"]) ? trim($_POST["Ecanton"]) : "";
+        $otros = isset($_POST["Eotros"]) ? trim($_POST["Eotros"]) : "";
 
         $cliente = new Cliente();
-        $cliente->setCedula($cedula);
-        $cliente->setTelefono($telefono);
         $cliente->setCorreo($correo);
         $encontrado = $cliente->verificarExistenciaCliente();
         if ($encontrado == false) {
@@ -118,35 +119,43 @@ switch ($_GET["op"]) {
             $cliente->setApellidoCliente($apellidoCliente);
             $cliente->setSegundoApCliente($segundoApCliente);
             $cliente->setGenero($genero);
+            $cliente->setTelefono($telefono);
             $cliente->setContrasena($contrasena);
             $cliente->setTipoCliente($tipoCliente);
             $cliente->setProvincia($provincia);
             $cliente->setDistrito($distrito);
             $cliente->setCanton($canton);
             $cliente->setOtros($otros);
-
+            
             if ($cliente->actualizarCliente()) {
                 echo 1; //exito en la actualizacion
             } else {
                 echo 2;  //Error al guardar en la base de datos
             }
         } else {
-            echo 3; 
+            echo 3;
         }
         break;
 
-    case 'obtener':
-        if (isset($_GET['Cedula'])) {
-            $Cedula = isset($_GET['Cedula']) ? intval($_GET['Cedula']) : null;
-            $cliente = Cliente::obtenerClientePorCedula($Cedula);
+    case 'cargarCliente':
+        $clienteModel = new Cliente();
+        $clientes = $clienteModel->obtenerCliente();
+        echo json_encode($clientes);
+        break;
 
-            if ($cliente) {
-                echo json_encode($cliente);
+    case 'obtenerClientePorCedula':
+        if (isset($_POST['Cedula'])) {
+            $Cedula = intval($_POST['Cedula']);
+            $cliente = new Cliente(); // Crear una instancia de la clase Producto
+            $clienteEncontrado = $cliente->obtenerClientePorCedula($Cedula); // Obtener el cliente por su cedula
+
+            if ($clienteEncontrado) {
+                echo json_encode($clienteEncontrado);
             } else {
                 echo json_encode(["error" => "No se encontró el cliente"]);
             }
         } else {
-            echo json_encode(["error" => "Cedula del cliente no proporcionada"]);
+            echo json_encode(["error" => "Cedula del cliente no proporcionado"]);
         }
         break;
 
@@ -167,11 +176,4 @@ switch ($_GET["op"]) {
             echo json_encode(["error" => "Cedula del cliente no proporcionado"]);
         }
         break;
-
-    case 'cargarCliente':
-        $clienteModel = new Cliente();
-        $clientes = $clienteModel->obtenerCliente();
-        echo json_encode($clientes);
-        break;
-
 }

@@ -1,1 +1,0 @@
-<strong>Copyright &copy; 2023 Evolve Admin</a>.</strong> Derechos Reservados.

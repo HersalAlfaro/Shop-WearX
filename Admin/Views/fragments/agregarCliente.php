@@ -36,7 +36,11 @@
 
                 <div class="mb-3 ">
                     <label for="genero">Genero</label>
-                    <input type="text" class="form-control" id="genero" name="genero" placeholder="Genero" required>
+                    <select class="form-select" id="genero" name="genero" placeholder="Seleccionar Genero" required>
+                        <option>Femenino</option>
+                        <option>Masculino</option>
+                        <option>Otro</option>
+                    </select>
                 </div>
 
                 <div class="mb-3 ">

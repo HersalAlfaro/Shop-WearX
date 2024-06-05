@@ -105,26 +105,11 @@ require_once '../../admin/config/conexion.php';
       </section>
       <!-- END STATISTIC CHART-->
 
-      <!-- DATA TABLE-->
-      <section class="p-t-20">
-        <?php
-        include 'fragments/dataTable.php'
-        ?>
-      </section>
-      <!-- END DATA TABLE-->
 
       <!-- COPYRIGHT-->
-      <section class="p-t-60 p-b-20">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="copyright">
-                <p>Copyright © 2024 Colorlib X WearX. Todos los derechos Reservados.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <?php
+      include 'fragments/footer.php'
+      ?>
       <!-- END COPYRIGHT-->
     </div>
 
@@ -153,7 +138,7 @@ require_once '../../admin/config/conexion.php';
 
   <!-- Main JS-->
   <script src="dist/js/main.js"></script>
-  
+
 
 </body>
 

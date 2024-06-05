@@ -7,12 +7,11 @@
                     <!-- Link--><a class="nav-link active" href="index.php">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <!-- Link--><a class="nav-link" href="shop.php">Tienda</a>
+                    <!-- Link--><a class="nav-link" href="tienda.php">Tienda</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="cart.php"> <i class="fas fa-dolly-flatbed me-1 text-gray"></i>Carrito<small class="text-gray fw-normal"> (2) </small></a></li>
-                <li class="nav-item"><a class="nav-link" href="#!"> <i class="far fa-heart me-1"></i><small class="text-gray fw-normal"> (0)</small></a></li>
+                <li class="nav-item"><a class="nav-link" href="carrito.php"> <i class="fas fa-dolly-flatbed me-1 text-gray"></i>Carrito<small class="text-gray fw-normal"> (2) </small></a></li>
                 <li class="nav-item"><a class="nav-link" href="#!"> <i class="fas fa-user me-1 text-gray fw-normal"></i>Cuenta</a></li>
             </ul>
         </div>

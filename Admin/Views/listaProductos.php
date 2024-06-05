@@ -72,29 +72,28 @@ require_once '../../admin/config/conexion.php';
             <!-- END BREADCRUMB-->
 
             <div class="modal fade" id="modalActualizar" tabindex="-1" aria-labelledby="modal1" aria-modal="true" role="dialog">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content" id="modalHijo">
-                            <!-- Encabezado del modal -->
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalTitle"></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content" id="modalHijo">
+                        <!-- Encabezado del modal -->
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalTitle"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
 
-                            <!-- Cuerpo del modal -->
-                            <div class="modal-body">
-                                <p id="modalContent"></p>
+                        <!-- Cuerpo del modal -->
+                        <div class="modal-body">
+                            <p id="modalContent"></p>
 
-                            </div>
+                        </div>
 
-                            <!-- Pie de página del modal -->
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id="confirmButton">Aceptar</button>
-                                <button type="button" class="btn btn-primary" id="confirmButton">Actualizar</button>
-                            </div>
+                        <!-- Pie de página del modal -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary" id="confirmButton">Actualizar</button>
                         </div>
                     </div>
                 </div>
+            </div>
 
             <div class="content-wrapper">
 
@@ -169,52 +168,44 @@ require_once '../../admin/config/conexion.php';
                         </div>
                     </div>
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">Lista de Productos</h5>
-                        </div>
+                    <div class="container flex-grow-1 container-p-y">
 
                         <!-- DataTable with Buttons -->
-                        <div class="card">
-                            <div class="card-datatable table-responsive">
-                                <table class="datatables-basic table border-top" id="datatable-productos">
-                                    <thead>
-                                        <tr>
-                                            <th>codigo</th>
-                                            <th>nombre</th>
-                                            <th>descripcion</th>
-                                            <th>cantidad</th>
-                                            <th>precio</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                        <div class="container" id="listaOrdenes">
+                            <h3 class="title-5 m-b-35">Lista Productos</h3>
+                            <div class="card">
+                                <div class="card-datatable table-responsive">
+                                    <table class="datatables-basic table border-top" id="datatable-productos">
+                                        <thead>
+                                            <tr>
+                                                <th>codigo</th>
+                                                <th>nombre</th>
+                                                <th>descripcion</th>
+                                                <th>cantidad</th>
+                                                <th>precio</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-
+                        <!-- / Content -->
                     </div>
-                    <!-- / Content: End -->
 
                     <div class="content-backdrop fade"></div>
                 </div>
 
                 <!-- COPYRIGHT-->
-                <section class="p-t-60 p-b-20">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="copyright">
-                                    <p>Copyright © 2024 Colorlib X WearX. Todos los derechos Reservados.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <?php
+                include 'fragments/footer.php'
+                ?>
                 <!-- END COPYRIGHT-->
+
             </div>
 
         </div>
-        
+
         <script src="dist/vendor/jquery-3.2.1.min.js"></script>
 
         <script src="dist/vendor/bootstrap-5.3/popper.min.js"></script>
@@ -229,15 +220,11 @@ require_once '../../admin/config/conexion.php';
         <script src="dist/vendor/circle-progress/circle-progress.min.js"></script>
         <script src="dist/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
         <script src="dist/vendor/chartjs/Chart.bundle.min.js"></script>
-        <script src="dist/vendor/select2/select2.min.js"></script>
+        <script src="dist/vendor/select2/js/select2.full.min.js"></script>
         <script src="dist/js/main.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest/dist/sweetalert2.all.min.js"></script>
-
-
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest/dist/sweetalert2.all.min.js"></script>
         <script src="dist/js/productosAdmin.js"></script>
-
 
 </body>
 
